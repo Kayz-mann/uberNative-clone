@@ -1,8 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
 import { Icon } from 'react-native-elements/dist/icons/Icon'
+import { useSelector } from 'react-redux'
 import tw from 'tailwind-react-native-classnames'
+import { selectOrigin } from '../slices/navSlice'
 
 const data = [
     {
@@ -14,13 +16,14 @@ const data = [
     {
         id: "456",
         title: "Order food",
-        image: "https://links/papareact.com/28w",
+        image: "https://www.pngplay.com/wp-content/uploads/2/Burger-Transparent-PNG.png",
         screen: "EatScreen",
     },
 ]
 
 const NavOptions = () => {
     const navigation = useNavigation();
+    const origin = useSelector(selectOrigin);
     return (
         <FlatList 
             data={data}
@@ -28,11 +31,12 @@ const NavOptions = () => {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
                 <TouchableOpacity
+                   disabled={!origin}
                  onPress={() => navigation.navigate(item.screen)}
-                 style={tw`p-2 pl-6 pb-8 pt-4 bg-gray-200 m-2 w-40` }>
-                    <View>
+                 style={tw`p-2 pl-6 pb-8 pt-4 bg-gray-200 m-2 w-30` }>
+                    <View style={tw` ${!origin && "opacity-20"}`}>
                         <Image 
-                          style={{width: 120, height: 120, resizeMode: "contain" }}
+                          style={{width: 100, height: 100, resizeMode: "contain" }}
                           source={{uri: item.image }}
                         />
                         <Text style={tw `mt-2 text-lg font-semibold`}>{item.title}</Text>
