@@ -4,8 +4,9 @@ import tw from 'tailwind-react-native-classnames';
 import NavOptions from '../components/NavOptions';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { useDispatch } from 'react-redux';
-import { setOrigin } from '../slices/navSlice';
+import { setOrigin, setDestination } from '../slices/navSlice';
 import { GOOGLE_MAPS_APIKEY } from '../api';
+import NavFavorites from '../components/NavFavorites';
 
 
 
@@ -37,8 +38,7 @@ const dispatch = useDispatch();
                       }
                   }}
                   onPress={(data, details = null) => {
-                      dispatch(
-                          setOrigin({
+                      dispatch(setOrigin({
                           location: details.geometry.location,
                           description: data.description
                       }))
@@ -56,6 +56,7 @@ const dispatch = useDispatch();
                   debounce={400}
                 />
                 <NavOptions />
+                <NavFavorites />
                 </View>
         </SafeAreaView>
         
